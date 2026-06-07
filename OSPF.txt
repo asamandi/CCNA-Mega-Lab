@@ -1,0 +1,78 @@
+==================================================
+OSPF Verification
+==================================================
+
+Objective:
+Verify OSPFv2 and OSPFv3 neighbor formation and routing.
+
+--------------------------------------------------
+OSPFv2 Neighbor Verification
+--------------------------------------------------
+
+R1:
+
+show ip ospf neighbor
+
+R2:
+
+show ip ospf neighbor
+
+R3:
+
+show ip ospf neighbor
+
+Expected:
+
+R1 neighbor = R3
+
+R2 neighbor = R3
+
+State = FULL
+
+--------------------------------------------------
+OSPF Route Verification
+--------------------------------------------------
+
+show ip route ospf
+
+Expected:
+
+O routes present
+
+Networks learned dynamically
+
+--------------------------------------------------
+End-to-End Connectivity
+--------------------------------------------------
+
+From PC1:
+
+ping 192.168.20.100
+ping 192.168.30.100
+ping 192.168.99.10
+
+Expected:
+
+All successful
+
+--------------------------------------------------
+OSPFv3 Verification
+--------------------------------------------------
+
+show ipv6 ospf neighbor
+
+Expected:
+
+FULL adjacency
+
+--------------------------------------------------
+IPv6 Routing Verification
+--------------------------------------------------
+
+show ipv6 route
+
+Expected:
+
+O routes present
+
+IPv6 networks learned dynamically

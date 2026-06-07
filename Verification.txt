@@ -1,0 +1,10 @@
+show vlan brief
+show interfaces trunk
+show standby brief
+show ip ospf neighbor
+show ip route
+show ipv6 ospf neighbor
+show ipv6 route
+show ip nat translations
+show access-lists
+show ipv6 access-list

@@ -1,0 +1,88 @@
+==================================================
+HSRP Verification
+==================================================
+
+Objective:
+Verify HSRP operation and failover between R1 and R2.
+
+--------------------------------------------------
+Verify HSRP Status
+--------------------------------------------------
+
+R1:
+
+show standby brief
+
+R2:
+
+show standby brief
+
+Expected:
+
+VLAN10
+R1 = Active
+R2 = Standby
+
+VLAN20
+R2 = Active
+R1 = Standby
+
+VLAN30
+R2 = Active
+R1 = Standby
+
+VLAN99
+R1 = Active
+R2 = Standby
+
+--------------------------------------------------
+Verify Virtual Gateway Reachability
+--------------------------------------------------
+
+From PC1:
+
+ping 192.168.10.1
+
+From PC3:
+
+ping 192.168.20.1
+
+From PC5:
+
+ping 192.168.30.1
+
+Expected:
+
+All pings successful
+
+--------------------------------------------------
+Failover Test
+--------------------------------------------------
+
+On R1:
+
+conf t
+interface g0/0
+shutdown
+
+Verify:
+
+show standby brief
+
+Expected:
+
+R2 becomes Active
+
+PCs continue reaching gateway
+
+--------------------------------------------------
+Restore R1
+--------------------------------------------------
+
+conf t
+interface g0/0
+no shutdown
+
+Expected:
+
+R1 regains Active role where configured

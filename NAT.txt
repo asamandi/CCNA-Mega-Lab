@@ -1,0 +1,73 @@
+==================================================
+NAT Verification
+==================================================
+
+Objective:
+Verify NAT overload (PAT) on R3.
+
+--------------------------------------------------
+Generate NAT Traffic
+--------------------------------------------------
+
+From PC1:
+
+ping 8.8.8.8
+
+From PC3:
+
+ping 8.8.8.8
+
+From PC5:
+
+ping 8.8.8.8
+
+--------------------------------------------------
+Verify NAT Translations
+--------------------------------------------------
+
+R3:
+
+show ip nat translations
+
+Expected:
+
+Inside local addresses translated
+to public address 203.0.113.2
+
+Example:
+
+192.168.10.x -> 203.0.113.2
+192.168.20.x -> 203.0.113.2
+192.168.30.x -> 203.0.113.2
+
+--------------------------------------------------
+Verify NAT Statistics
+--------------------------------------------------
+
+show ip nat statistics
+
+Expected:
+
+Hits increasing
+
+Active translations visible
+
+--------------------------------------------------
+Verify Default Route
+--------------------------------------------------
+
+show ip route
+
+Expected:
+
+S* 0.0.0.0/0 via 203.0.113.1
+
+--------------------------------------------------
+Internet Reachability
+--------------------------------------------------
+
+ping 8.8.8.8
+
+Expected:
+
+Success

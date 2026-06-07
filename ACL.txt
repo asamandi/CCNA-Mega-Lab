@@ -1,0 +1,94 @@
+==================================================
+ACL Verification
+==================================================
+
+Objective:
+Verify IPv4 and IPv6 ACL functionality.
+
+--------------------------------------------------
+IPv4 ACL Verification
+--------------------------------------------------
+
+R1:
+
+show access-lists
+
+Expected:
+
+BLOCK_VLAN20_HTTP ACL present
+
+--------------------------------------------------
+Test HTTP Restriction
+--------------------------------------------------
+
+From VLAN20 PC (PC3 or PC4):
+
+ping 192.168.99.10
+
+Expected:
+
+SUCCESS
+
+Open browser:
+
+http://192.168.99.10
+
+Expected:
+
+FAIL
+
+--------------------------------------------------
+Verify ACL Counters
+--------------------------------------------------
+
+show access-lists
+
+Expected:
+
+Deny counter increases
+
+Permit counter increases
+
+--------------------------------------------------
+IPv6 ACL Verification
+--------------------------------------------------
+
+show ipv6 access-list
+
+Expected:
+
+V6_BLOCK_VLAN30 present
+
+--------------------------------------------------
+IPv6 Traffic Test
+--------------------------------------------------
+
+From VLAN30 PC:
+
+Attempt IPv6 communication
+
+Expected:
+
+Blocked
+
+--------------------------------------------------
+ICMPv6 Verification
+--------------------------------------------------
+
+show ipv6 access-list
+
+Expected:
+
+ICMP permit entries visible
+
+--------------------------------------------------
+ACL Troubleshooting Commands
+--------------------------------------------------
+
+show access-lists
+
+show ipv6 access-list
+
+show running-config | include access-group
+
+show running-config | include traffic-filter
