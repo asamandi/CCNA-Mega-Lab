@@ -1,151 +1,237 @@
-VLANs + Trunking
+## CCNA Enterprise Mega Lab
+### Overview
 
-Inter-VLAN Routing (Router-on-a-Stick)
+This project demonstrates a complete enterprise network built in Cisco Packet Tracer. The lab combines multiple CCNA technologies into a single enterprise environment and validates connectivity, redundancy, routing, security, IPv6, and Internet access.
 
-DHCP + DHCP Relay
+The goal of this project is to simulate a real-world enterprise network while practicing configuration, verification, and troubleshooting skills.
 
-OSPF (IPv4 + IPv6)
+------------------------------------------------------------------
+### Technologies Implemented
+- VLANs
+- Trunking (802.1Q)
+- Inter-VLAN Routing (Router-on-a-Stick)
+- HSRP (Gateway Redundancy)
+- DHCP Relay (IP Helper Address)
+- DHCP Services
+- OSPFv2
+- OSPFv3
+- IPv4 Routing
+- IPv6 Routing
+- NAT Overload (PAT)
+- IPv4 ACLs
+- IPv6 ACLs
+- High Availability
+- Enterprise Troubleshooting
 
-NAT Overload (PAT)
+-------------------------------------------------------------------------
+### Network Topology
+### Routers
+- R1
+- R2
+- R3
+- ISP
 
-ACLs (IPv4 + IPv6)
+### Switches
+- S1
 
-HSRP (Gateway Redundancy)
+### End Devices
+- PC1
+- PC2
+- PC3
+- PC4
+- PC5
+- PC6
+- Server1
 
-IPv6 (SLAAC + DHCPv6)
+--------------------------------------------------------------------------------
+### VLAN Design
+| VLAN | Name    | IPv4 Network    |
+| ---- | ------- | --------------- |
+| 10   | SALES   | 192.168.10.0/24 |
+| 20   | HR      | 192.168.20.0/24 |
+| 30   | IT      | 192.168.30.0/24 |
+| 99   | SERVERS | 192.168.99.0/24 |
 
-STP (Loop prevention)
+--------------------------------------------------------------------------------
+### IPv6 Design
+| VLAN | IPv6 Prefix      |
+| ---- | ---------------- |
+| 10   | 2001:DB8:10::/64 |
+| 20   | 2001:DB8:20::/64 |
+| 30   | 2001:DB8:30::/64 |
+| 99   | 2001:DB8:99::/64 |
 
-WAN concepts
+--------------------------------------------------------------------------------
+### HSRP Configuration
+Gateway redundancy is implemented between R1 and R2.
 
-
-Routers:
----------------------------------------
-R1
-
-R2
-
-R3 ← edge/core (does NAT)
-
-ISP ← internet
-
-Switch:
----------------------------------------
-S1
-
-End devices:
----------------------------------------
-PC1, PC2 (VLAN10)
-
-PC3, PC4 (VLAN20)
-
-PC5, PC6 (VLAN30)
-
-Server1 (DHCP + HTTP)
-
-Cabling + Exact Interface Map:
----------------------------------------
-S1
-
-Fa0/1 → PC1 (VLAN10)
-
-Fa0/2 → PC2 (VLAN10)
-
-Fa0/3 → PC3 (VLAN20)
-
-Fa0/4 → PC4 (VLAN20)
-
-Fa0/5 → PC5 (VLAN30)
-
-Fa0/6 → PC6 (VLAN30)
-
-Fa0/24 → Server1 (VLAN99 Servers)
-
-Gi0/1 ↔ R1 Gi0/0 (TRUNK)
-
-Gi0/2 ↔ R2 Gi0/0 (TRUNK)
-
-Core/WAN links:
----------------------------------------
-R1 Gi0/1 ↔ R3 Gi0/0
-
-2 Gi0/1 ↔ R3 Gi0/1
-
-R3 Gi0/2 ↔ ISP Gi0/0
-
-Addressing Plan IPv4 + IPv6
----------------------------------------
-VLANs (IPv4)
-
-| VLAN | Name    | Subnet          | HSRP Gateway |
-| ---- | ------- | --------------- | ------------ |
-| 10   | SALES   | 192.168.10.0/24 | 192.168.10.1 |
-| 20   | HR      | 192.168.20.0/24 | 192.168.20.1 |
-| 30   | IT      | 192.168.30.0/24 | 192.168.30.1 |
-| 99   | SERVERS | 192.168.99.0/24 | 192.168.99.1 |
+### Virtual Gateways
+| VLAN | Virtual Gateway |
+| ---- | --------------- |
+| 10   | 192.168.10.1    |
+| 20   | 192.168.20.1    |
+| 30   | 192.168.30.1    |
+| 99   | 192.168.99.1    |
 
 
-Router VLAN IPs (per VLAN):
----------------------------------------
-R1 = .2
+### Active Routers
+| VLAN | Active Router |
+| ---- | ------------- |
+| 10   | R1            |
+| 20   | R2            |
+| 30   | R2            |
+| 99   | R1            |
 
-R2 = .3
+--------------------------------------------------------------------------------
+### Dynamic Routing
+### OSPFv2
+Configured between 
+- R1
+- R2
+- R3.
 
-HSRP virtual = .1
+Purpose:
+- Automatic route exchange
+- Faster convergence
+- Simplified routing administration
 
-Example VLAN10:
----------------------------------------
-R1: 192.168.10.2
+### OSPFv3
+- Configured for IPv6 routing.
 
-R2: 192.168.10.3
+Purpose:
+- Dynamic IPv6 route exchange
+- End-to-end IPv6 connectivity
 
-VIP: 192.168.10.1
+--------------------------------------------------------------------------------
+### DHCP Implementation
+Server1 provides DHCP services for all VLANs.
 
-IPv6 VLAN prefixes:
----------------------------------------
+### DHCP Relay
 
-| VLAN | IPv6 Prefix      | Router GW (R1) |
-| ---- | ---------------- | -------------- |
-| 10   | 2001:DB8:10::/64 | 2001:DB8:10::1 |
-| 20   | 2001:DB8:20::/64 | 2001:DB8:20::1 |
-| 30   | 2001:DB8:30::/64 | 2001:DB8:30::1 |
-| 99   | 2001:DB8:99::/64 | 2001:DB8:99::1 |
+Implemented using:
+- ip helper-address
 
+Purpose:
+- Forward DHCP broadcasts across routed networks
+- Centralized DHCP management
 
-Routed links (IPv4):
----------------------------------------
-R1–R3: 10.0.13.0/30
+--------------------------------------------------------------------------------
+### NAT Overload (PAT)
 
-R1 Gi0/1 = 10.0.13.1
+Configured on R3.
 
-R3 Gi0/0 = 10.0.13.2
+Purpose:
+- Allow private IPv4 networks to access external networks
+- Translate multiple private addresses to a single public IP
 
-R2–R3: 10.0.23.0/30
+Public Interface:
+- 203.0.113.2
 
-R2 Gi0/1 = 10.0.23.1
+Internet Test Address:
+- 8.8.8.8
 
-R3 Gi0/1 = 10.0.23.2
+--------------------------------------------------------------------------------
+### Security Implementation
+### IPv4 ACL
+Blocks HTTP traffic from VLAN20 users to the internal server while allowing all other traffic.
 
-R3–ISP: 203.0.113.0/30
+### IPv6 ACL
+Blocks IPv6 traffic originating from VLAN30 while permitting ICMPv6 traffic required for IPv6 operation.
 
-R3 Gi0/2 = 203.0.113.2
+--------------------------------------------------------------------------------
+### Verification Commands
+### VLANs
+- show vlan brief
+- show interfaces trunk
 
-ISP Gi0/0 = 203.0.113.1
+### HSRP
+- show standby brief
 
-ISP “internet” loopback:
+### OSPF
+- show ip ospf neighbor
+- show ip route
 
-ISP Lo0 = 8.8.8.8/32
+### OSPFv3
+- show ipv6 ospf neighbor
+- show ipv6 route
 
-Routed links (IPv6):
----------------------------------------
-R1–R3: 2001:DB8:13::/64
+### NAT
+- show ip nat translations
+- show ip nat statistics
 
-R1 Gi0/1 = 2001:DB8:13::1/64
+### ACLs
+- show access-lists
+- show ipv6 access-list
 
-R3 Gi0/0 = 2001:DB8:13::2/64
+--------------------------------------------------------------------------------
+### Validation Performed
+### Layer 2
+- VLAN connectivity verified
+- Trunk operation verified
 
-R2–R3: 2001:DB8:23::/64
+### Layer 3
+- Inter-VLAN routing verified
+- OSPF route exchange verified
+- OSPFv3 route exchange verified
 
-R2 Gi0/1 = 2001:DB8:23::1/64
+### High Availability
+- HSRP failover tested
+- Gateway redundancy verified
 
-R3 Gi0/1 = 2001:DB8:23::2/64
+### Services
+- DHCP address assignment verified
+- DHCP relay functionality verified
+
+### Security
+- IPv4 ACL functionality verified
+- IPv6 ACL functionality verified
+
+### Internet Connectivity
+- NAT translations verified
+- End-to-end connectivity to 8.8.8.8 verified
+
+--------------------------------------------------------------------------------
+### Troubleshooting Scenarios Tested
+- DHCP failures
+- Missing helper-address
+- OSPF adjacency issues
+- NAT translation issues
+- ACL blocking traffic
+- HSRP failover events
+- IPv6 routing problems
+
+--------------------------------------------------------------------------------
+### Skills Demonstrated
+- Cisco Router Configuration
+- Cisco Switch Configuration
+- Enterprise VLAN Design
+- Inter-VLAN Routing
+- First-Hop Redundancy Protocol (HSRP)
+- Dynamic Routing (OSPFv2/OSPFv3)
+- DHCP Services
+- DHCP Relay
+- Network Address Translation (NAT)
+- Access Control Lists (ACLs)
+- IPv6 Networking
+- Network Troubleshooting
+- Enterprise Network Operations
+
+--------------------------------------------------------------------------------
+### Project Outcome
+Successfully designed, configured, verified, and troubleshot a complete enterprise network infrastructure using Cisco Packet Tracer.
+
+This project demonstrates practical CCNA-level skills in:
+- Routing
+- Switching
+- VLANs
+- HSRP
+- OSPF
+- OSPFv3
+- DHCP
+- DHCP Relay
+- NAT/PAT
+- IPv4 ACLs
+- IPv6 ACLs
+- IPv6 Networking
+- Network Troubleshooting
+- Enterprise Network Operations
