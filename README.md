@@ -6,6 +6,13 @@ This project demonstrates a complete enterprise network built in Cisco Packet Tr
 The goal of this project is to simulate a real-world enterprise network while practicing configuration, verification, and troubleshooting skills.
 
 ------------------------------------------------------------------
+
+## Network Topology
+
+![CCNA Mega Lab - Cisco Packet Tracer Network Topology](images/network-topology.png)
+
+------------------------------------------------------------------
+
 ### Technologies Implemented
 - VLANs
 - Trunking (802.1Q)
