@@ -7,7 +7,7 @@ The goal of this project is to simulate a real-world enterprise network while pr
 
 ------------------------------------------------------------------
 
-## Network Topology
+### Network Topology
 
 ![CCNA Mega Lab - Cisco Packet Tracer Network Topology](https://github.com/asamandi/CCNA-Mega-Lab/blob/main/Screenshots/Topology.png)
 
